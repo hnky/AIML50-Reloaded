@@ -17,12 +17,9 @@ if __name__ == '__main__':
 
     args,unparsed = parser.parse_known_args()
     
-    
     print('Model assets path is:',args.model_assets_path)
     print('Model name is:',args.model_name)
-    
-    
-    
+      
     run = Run.get_context()
    
     pipeline_run = Run(run.experiment, run._root_run_id)
@@ -30,6 +27,8 @@ if __name__ == '__main__':
     pipeline_run.upload_file("outputs/model/labels.txt",os.path.join(args.model_assets_path,"labels.txt"))
     pipeline_run.upload_file("outputs/deployment/score.py","deployment/score.py")
     pipeline_run.upload_file("outputs/deployment/myenv.yml","deployment/myenv.yml")
+    pipeline_run.upload_file("outputs/deployment/deploymentconfig.json","deployment/deploymentconfig.json")
+    pipeline_run.upload_file("outputs/deployment/inferenceconfig.json","deployment/inferenceconfig.json")
                 
     model = pipeline_run.register_model(model_name='seer', model_path='outputs/')
        
