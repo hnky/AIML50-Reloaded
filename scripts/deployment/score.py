@@ -8,6 +8,7 @@ from PIL import Image
 import requests
 from io import BytesIO
 import time
+import datetime
 
 from azureml.core.model import Model
 
@@ -34,9 +35,6 @@ def run(input_data):
 
     response = requests.get(url)
     input_image = Image.open(BytesIO(response.content))
-    #urllib.request.urlretrieve(url, filename="tmp.jpg")
-    
-    #input_image = Image.open("tmp.jpg")
 
     preprocess = transforms.Compose([
         transforms.Resize(225),
