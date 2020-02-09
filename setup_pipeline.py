@@ -15,25 +15,9 @@ import sys, getopt, os
 ## Get arguments
 def printhelp():
         print ('Arguments:')
-        print ('  -d    Data Store name')
-        print ('  -p    Data Store Path')
         print ('  -c    Compute Target name')
-        print ('  -v    Universal Package version (for deployment and inferencing code)')
-        print ('  -s    Azure Subscription id')
-        print ('  -a    Storage Account name')
-        print ('  -k    Storage Account key')
-        print ('  -r    Resource Group name')
-        print ('  -w    Machine Learning workspace name')
-
-datastorename=''
-datastorepath=''
-computetarget=''
-packageversion=''
-workspace_name=''
-subscription_id=''
-resource_group=''
-storage_account=''
-storage_account_key=''
+        print ('  -m    Model name')
+        print ('  -e    Experiment name')
 
 experiment_name = 'seer-from-devops'
 compute_target = 'OptimusPrime'
@@ -48,16 +32,12 @@ except getopt.GetoptError:
 for opt, arg in opts:
     if opt == '-h':
         printhelp
-    elif opt == '-d':
-        datastorename = arg
-    elif opt == '-p':
-        datastorepath = arg
     elif opt == '-c':
-        computetarget = arg
-    elif opt == '-v':
-        packageversion = arg
-    elif opt == '-r':
-        resource_group = arg
+        compute_target = arg
+    elif opt == '-m':
+        model_name = arg
+    elif opt == '-e':
+        experiment_name = arg
 
 print("Azure ML SDK Version: ", VERSION)
 
@@ -180,5 +160,5 @@ published_pipeline = pipeline.publish(
 ## Submit the pipeline to be run ##
 # Finally, we submit the pipeline for execution #
 
-#pipeline_run = published_pipeline.submit(ws,experiment_name)
-#print('Run created with ID: ', pipeline_run.id)
+pipeline_run = published_pipeline.submit(ws,experiment_name)
+print('Run created with ID: ', pipeline_run.id)
