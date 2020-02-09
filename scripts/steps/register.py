@@ -29,20 +29,11 @@ if __name__ == '__main__':
     pipeline_run.upload_file("outputs/deployment/myenv.yml","deployment/myenv.yml")
     pipeline_run.upload_file("outputs/deployment/deploymentconfig.json","deployment/deploymentconfig.json")
     pipeline_run.upload_file("outputs/deployment/inferenceconfig.json","deployment/inferenceconfig.json")
-                
-    model = pipeline_run.register_model(model_name='seer', model_path='outputs/')
+
+    tags = {
+       "Ignite":"Amsterdam"
+    }
+
+    model = pipeline_run.register_model(model_name='seer', model_path='outputs/',tags=tags)
        
     print('Model registered: {} \nModel Description: {} \nModel Version: {}'.format(model.name, model.description, model.version))
-
-  #  tags = {
-  #      "runId":str(run.id),
-  #      "trainingDataSet":args.model_assets_path
- #   }
-
-    
-    
-   # print(args.model_assets_path)
- #   print(json.dumps(tags))
-    
-  #  model = Model.register(ws, model_name = modelName, model_path = args.model_assets_path, tags=tags)
-    
