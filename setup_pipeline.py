@@ -78,7 +78,7 @@ print("Experiment:",experiment.name)
 
 source_dataset = DataPath(
     datastore=ds, 
-    path_on_datastore="seer")
+    path_on_datastore="seer-dummy")
 
 source_dataset_param = (PipelineParameter(name="source_dataset",default_value=source_dataset),
                           DataPathComputeBinding())
