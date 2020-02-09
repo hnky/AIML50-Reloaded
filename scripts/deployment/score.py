@@ -4,8 +4,10 @@ import torch.nn as nn
 import torchvision
 from torchvision import transforms
 import json
-import urllib
 from PIL import Image
+import requests
+from io import BytesIO
+import time
 
 from azureml.core.model import Model
 
@@ -27,10 +29,14 @@ def init():
 
     
 def run(input_data):
-    url = json.loads(input_data)['url']
-    urllib.request.urlretrieve(url, filename="tmp.jpg")
+    url = json.loads(input_data)['image']
+    prev_time = time.time()
+
+    response = requests.get(url)
+    input_image = Image.open(BytesIO(response.content))
+    #urllib.request.urlretrieve(url, filename="tmp.jpg")
     
-    input_image = Image.open("tmp.jpg")
+    #input_image = Image.open("tmp.jpg")
 
     preprocess = transforms.Compose([
         transforms.Resize(225),
@@ -52,6 +58,13 @@ def run(input_data):
     index = output.data.cpu().numpy().argmax()
     probability = torch.nn.functional.softmax(output[0], dim=0).data.cpu().numpy().max()
 
-    result = {"label": labels[index], "probability": round(probability*100,2)}
-    os.remove("tmp.jpg")
+    current_time = time.time()
+    inference_time = datetime.timedelta(seconds=current_time - prev_time)
+
+    result = {
+        "time": str(inference_time.total_seconds()),
+        "prediction": labels[index], 
+        "probability": round(probability*100,2)
+    }
+
     return result
