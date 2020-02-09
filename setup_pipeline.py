@@ -181,4 +181,4 @@ published_pipeline = pipeline.publish(
 # Finally, we submit the pipeline for execution #
 
 #pipeline_run = published_pipeline.submit(ws,experiment_name)
-print('Run created with ID: ', pipeline_run.id)
+#print('Run created with ID: ', pipeline_run.id)
