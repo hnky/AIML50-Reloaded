@@ -33,8 +33,11 @@ def run(input_data):
     url = json.loads(input_data)['image']
     prev_time = time.time()
 
-    response = requests.get(url)
-    input_image = Image.open(BytesIO(response.content))
+    if(url.startswith('http')):
+        response = requests.get(url)
+        input_image = Image.open(BytesIO(response.content))
+    else:
+        input_image = Image.open(url)
 
     preprocess = transforms.Compose([
         transforms.Resize(225),
@@ -59,10 +62,13 @@ def run(input_data):
     current_time = time.time()
     inference_time = datetime.timedelta(seconds=current_time - prev_time)
 
+    predictions = {}
+    predictions[labels[index]] = str(round(probability*100,2))
+
     result = {
-        "time": str(inference_time.total_seconds()),
-        "prediction": labels[index], 
-        "probability": round(probability*100,2)
+        'time': str(inference_time.total_seconds()),
+        'prediction': labels[index], 
+        'scores': predictions
     }
 
     return result
