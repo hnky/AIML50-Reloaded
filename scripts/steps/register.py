@@ -31,7 +31,7 @@ if __name__ == '__main__':
     pipeline_run.upload_file("outputs/deployment/inferenceconfig.json","deployment/inferenceconfig.json")
 
     tags = {
-       "Ignite":"Amsterdam"
+       "Ignite":"Dubai"
     }
 
     model = pipeline_run.register_model(model_name='seer', model_path='outputs/',tags=tags)
