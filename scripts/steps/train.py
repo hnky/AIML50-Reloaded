@@ -53,7 +53,7 @@ class_names = image_datasets['train'].classes
 
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
-def train_model(model, criterion, optimizer, scheduler, num_epochs=25):
+def train_model(model, criterion, optimizer, scheduler, num_epochs=30):
     since = time.time()
 
     best_model_wts = copy.deepcopy(model.state_dict())
